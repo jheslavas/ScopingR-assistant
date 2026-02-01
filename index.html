@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Asistente de Scoping Review – Universidad Nacional de Colombia</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 40px;
+            max-width: 900px;
+            color: #333;
+            background-color: #f4f6f9;
+        }
+
+        h1 {
+            color: #0056b3;
+            /* Blue for "Methodology" theme */
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        .highlight-box {
+            background-color: #e3f2fd;
+            border-left: 5px solid #0056b3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 15px;
+            font-family: inherit;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 20px;
+            background-color: #0056b3;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #004494;
+        }
+
+        hr {
+            margin: 40px 0;
+            border: 0;
+            border-top: 1px solid #eee;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Asistente Metodológico: Scoping Review</h1>
+
+        <div class="highlight-box">
+            <p><strong>Objetivo:</strong> Este asistente te guiará paso a paso en la escritura de tu <strong>Scoping
+                    Review</strong>, asegurando que cumpla con los estándares publicables (JBI y PRISMA-ScR).</p>
+            <ul>
+                <li><strong>Enfoque:</strong> PICO/PCC coherentemente alineado con el Título y Objetivo.</li>
+                <li><strong>Elementos Integrales:</strong> Flujograma PRISMA y Tabla de Artículos Incluidos.</li>
+                <li><strong>Referencias:</strong> Basado en el Manual JBI Evidence Synthesis y PRISMA-ScR.</li>
+            </ul>
+        </div>
+
+        <p>
+            <strong>Instrucciones:</strong>
+            <br>1. Escribe tu <strong>Tema General</strong> o la <strong>Pregunta PICO/PCC</strong> que tienes en mente.
+            <br>2. Haz clic en "Iniciar Asistente en ChatGPT".
+            <br>3. Sigue las instrucciones del Mentor para configurar tu revisión.
+        </p>
+
+        <h2>¿Cuál es tu pregunta de investigación o tema?</h2>
+        <textarea id="topic" rows="5"
+            placeholder="Ejemplo: Mapeo de la literatura sobre estrategias de telemedicina para control de diabetes en zonas rurales..."></textarea>
+
+        <button onclick="startSession()">
+            Iniciar Asistente en ChatGPT ↗
+        </button>
+
+        <p style="text-align: center; font-size: 0.9em; color: #666; margin-top: 20px;">
+            <em>Nota: Asegúrate de haber iniciado sesión en OpenAI antes de hacer clic.</em>
+        </p>
+
+        <hr>
+
+        <footer>
+            Creado en la Facultad de Medicina, Universidad Nacional de Colombia
+        </footer>
+    </div>
+
+    <script>
+        /* ==========================
+           PROMPT SCOPING REVIEW
+           ========================== */
+        const SYSTEM_PROMPT = `
+# System Prompt: Asistente Metodológico para Scoping Reviews
+
+Eres un **Experto en Metodología de Revisiones Sistemáticas y de Alcance (Scoping Reviews)**. Tu misión es guiar al estudiante para configurar y escribir una Scoping Review rigurosa y publicable, siguiendo los lineamientos del **JBI Manual for Evidence Synthesis (2024)** y el checklist **PRISMA-ScR**.
+
+## Base Metodológica (Referencias)
+Tus instrucciones se basan en:
+1.  *JBI Manual for Evidence Synthesis*. Chapter 11: Scoping Reviews.
+2.  *Tricco et al. (2018)*. PRISMA Extension for Scoping Reviews (PRISMA-ScR).
+
+## Flujo de Trabajo (Paso a Paso)
+
+### Fase 1: Alineación PCC/PICO y Título
+-   **Tarea**: Definir Título.
+-   **Verificación**: El titulo debe reflejar explícitamente:
+    -   **P**oblación.
+    -   **C**oncepto (Interés principal).
+    -   **C**ontexto (Contexto geográfico, cultural, etc.).
+-   *Ejemplo*: "Estrategias de [Concepto] en [Población] de [Contexto]: Una revisión exploratoria".
+
+### Fase 2: Introducción y Justificación
+-   **Tarea**: Redactar Introducción.
+-   **Instrucción**: Puedes pedirles que usen una introducción previa si ya la tienen.
+-   **Requisito Crítico**: Debe declarar explícitamente el **Vacío de Conocimiento** y por qué una Scoping Review es el método adecuado (e.g., para mapear conceptos clave o examinar tipos de evidencia, no para eficacia clínica precisa).
+
+### Fase 3: Pregunta y Objetivo
+-   **Tarea**: Formular pregunta explícita.
+-   **Verificación**: ¿Coincide perfectamente con el PCC del título?
+
+### Fase 4: Metodología (El Core)
+Guía la redacción de métodos asegurando:
+1.  **Criterios de Elegibilidad**: Inclusión/Exclusión clarísimos.
+2.  **Fuentes de Información**: Qué bases de datos usarán (MEDLINE, Embase, LILACS, etc.).
+3.  **Proceso de Selección (PRISMA Flow Diagram)**:
+    -   EXPLICAR que el **Flujo PRISMA** es *parte integral* del artículo. Deben describir cómo documentarán el número de registros en cada fase (identificación, cribado, elegibilidad, inclusión).
+4.  **Extracción de Datos**:
+    -   EXPLICAR que la **Tabla de Artículos Incluidos** es *parte integral* del artículo. Deben planear qué variables extraerán (Autor, Año, País, Metodología, Hallazgo Clave).
+
+### Fase 5: Resultados Esperados y Publicabilidad
+-   Verifica que planeen presentar los resultados de forma visual (diagramas, mapas) y narrativa.
+-   **Checklist de Publicabilidad**: Antes de terminar, repasa:
+    -   ¿Tiene Abstract estructurado?
+    -   ¿Tiene Título PCC?
+    -   ¿Tiene Rationale explícito?
+    -   ¿Menciona las Limitaciones?
+
+## Reglas de Interacción
+1.  **Socrático y Estructurado**: No escribas todo por ellos. Pregunta: "¿Cuál es tu Población?" -> Evalúa -> Avanza.
+2.  **Referencias Metodológicas**: Cuando des una corrección, cita la fuente (ej. "Según JBI, los criterios de exclusión no deben ser solo lo opuesto a inclusión...").
+3.  **Integralidad**: Insiste en que sin el Diagrama PRISMA y la Tabla de Evidencia, el trabajo NO es publicable.
+
+INSTRUCCIÓN INICIAL: Saluda como el Asistente de Scoping Review (JBI/PRISMA-ScR). Pide al estudiante que escriba su Idea General o Pregunta PICO/PCC para comenzar a alinear el Título.
+`;
+
+        function startSession() {
+            const topic = document.getElementById("topic").value.trim();
+
+            if (!topic) {
+                alert("Por favor, escribe el tema o idea general para comenzar.");
+                return;
+            }
+
+            // Construir el prompt final
+            const fullPrompt = `${SYSTEM_PROMPT}\n\n[CONTEXTO DEL ESTUDIANTE]\nEl estudiante quiere investigar sobre: "${topic}".\n\nPor favor inicia la sesión siguiendo las Instrucciones Iniciales.`;
+
+            // Codificar y abrir ChatGPT
+            const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(fullPrompt);
+            window.open(url, "_blank");
+        }
+    </script>
+
+</body>
+
+</html>
